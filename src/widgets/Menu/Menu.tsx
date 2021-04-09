@@ -21,17 +21,20 @@ const StyledNav = styled.nav<{ showMenu: boolean }>`
   top: ${({ showMenu }) => (showMenu ? 0 : `-${MENU_HEIGHT}px`)};
   left: 0;
   transition: top 0.2s;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   padding-left: 8px;
   padding-right: 16px;
   width: 100%;
   height: ${MENU_HEIGHT}px;
   background-color: ${({ theme }) => theme.nav.background};
-  border-bottom: solid 2px rgba(133, 133, 133, 0.1);
   z-index: 20;
   transform: translate3d(0, 0, 0);
+`;
+
+const FlexNav = styled.div<{ showMenu: boolean}>`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
 `;
 
 const gradient = keyframes`
@@ -49,7 +52,7 @@ const gradient = keyframes`
 const AnimatedTopBar = styled.div<{ showMenu: boolean }>`
   width: 100vw;
   background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-  background-size: 400% 400%;
+  background-size: 100% 100%;
   animation: 1.5s ${gradient} linear;
   height: 1vh;
  `;
@@ -134,16 +137,18 @@ const Menu: React.FC<NavProps> = ({
   return (
     <Wrapper>
       <StyledNav showMenu={showMenu}>
-        <Logo
-          isPushed={isPushed}
-          togglePush={() => setIsPushed((prevState: boolean) => !prevState)}
-          isDark={isDark}
-          href={homeLink?.href ?? "/"}
-        />
-        <Flex>
-          <UserBlock account={account} login={login} logout={logout} />
-          {profile && <Avatar profile={profile} />}
-        </Flex>
+        <FlexNav showMenu={showMenu}>
+          <Logo
+            isPushed={isPushed}
+            togglePush={() => setIsPushed((prevState: boolean) => !prevState)}
+            isDark={isDark}
+            href={homeLink?.href ?? "/"}
+          />
+          <Flex>
+            <UserBlock account={account} login={login} logout={logout} />
+            {profile && <Avatar profile={profile} />}
+          </Flex>
+        </FlexNav>
         <AnimatedTopBar showMenu={showMenu} />
       </StyledNav>
       <BodyWrapper>
