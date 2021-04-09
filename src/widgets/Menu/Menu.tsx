@@ -46,11 +46,14 @@ const gradient = keyframes`
   }
 `
 
-const AnimatedTopBar = styled.div<{}>`
+const AnimatedTopBar = styled.div<{ showMenu: boolean }>`
   width: 100vw;
   background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
   background-size: 400% 400%;
   animation: 1.5s ${gradient} linear;
+  position: fixed;
+  top: ${({ showMenu }) => (showMenu ? 0 : `-${MENU_HEIGHT}px`)};
+  height: 1vh;
  `;
 
 const BodyWrapper = styled.div`
@@ -144,7 +147,7 @@ const Menu: React.FC<NavProps> = ({
           {profile && <Avatar profile={profile} />}
         </Flex>
       </StyledNav>
-      <AnimatedTopBar />
+      <AnimatedTopBar showMenu={showMenu} />
       <BodyWrapper>
         <Panel
           isPushed={isPushed}
